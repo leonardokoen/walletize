@@ -87,7 +87,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': 'localhost',
-        'NAME': 'Walletize_Users',
+        'NAME': 'walletize_users',
         'USER': 'admin',
         'PASSWORD': 'admin',
         'PORT': '5432',
