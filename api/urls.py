@@ -4,4 +4,7 @@ from django.urls import path, include
 urlpatterns = [
         path('signin/', include('api.signin.urls')),
         path('signup/', include('api.signup.urls')),
+        path('token_refresh/', include('api.token_refresh.urls')),
+        path('verify/', include('api.verification.urls'))
+
    ]

@@ -18,8 +18,9 @@ class SignInView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         refresh = RefreshToken.for_user(user)
-        token = str(refresh.access_token)
-        return Response({'message': 'You Signed In Successfully','token': token}, status=200)
+        token_refresh = str(refresh)
+        token_access = str(refresh.access_token)
+        return Response({'message': 'You Signed In Successfully','access_token (300s)': token_access, 'refresh_token (1 day)': token_refresh}, status=200)
     
     def handle_exception(self, exc):
         if isinstance(exc, AuthenticationFailed):
