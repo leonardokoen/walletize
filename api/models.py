@@ -1,4 +1,4 @@
-#I created custom user because we wanted email as key but the default user had username as key
+#I created a custom user because I want email as key but the default user had username as key
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
