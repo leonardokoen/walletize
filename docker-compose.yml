@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+
+  db:
+    restart: always
+    image: postgres:12
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - /postgres_data:/var/lib/postgresql/data/
+
+  redis:
+    image: redis
+    expose:
+      - 6379
+
+  django:
+    restart: always
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/src
+    command: sh -c "python manage.py makemigrations &&
+                    python manage.py migrate &&
+                    python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=admin
+      - CELERY_BROKER_URL=redis://redis:6379/
+      - CELERY_RESULT_BACKEND=redis://redis:6379/
+    depends_on:
+      - db
+
+  celery_worker:
+    restart: always
+    build: .
+    command: python -m celery -A walletize worker -l info
+    volumes:
+      - ./src:/src
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=admin
+    depends_on:
+      - redis
+      - django
