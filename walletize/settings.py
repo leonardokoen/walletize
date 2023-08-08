@@ -109,12 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-#Make our own authentication
-AUTHENTICATION_BACKENDS = [
-       'api.backends.EmailBackend',
-   ]
-
-
+# DEFINE CUSTOM USER for AUTHENTICATION
 AUTH_USER_MODEL = 'api.User'
 
 # Internationalization
@@ -140,7 +135,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
+#CELERY SETTINGS
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -148,10 +143,12 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
+#EMAIL SETTINGS
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.protonmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'walletize_app@protonmail.com'
-EMAIL_HOST_PASSWORD = 'walletizeadmin'
+EMAIL_HOST_USER = 'walletizeapp@gmail.com'
+EMAIL_HOST_PASSWORD = 'ushdudcjqqancpud'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'walletize_app@protonmail.com'
+DEFAULT_FROM_EMAIL = 'walletizeapp@gmail.com'
+

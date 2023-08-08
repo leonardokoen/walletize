@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 #Created my own backend authentication because we want
 # to log in eith email instead of username
 
-class EmailBackend(ModelBackend):
+class EmailAuthenticationBackend(ModelBackend):
     def authenticate(email=None, password=None, **kwargs):
         UserModel = get_user_model()
         try:

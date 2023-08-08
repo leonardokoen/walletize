@@ -1,10 +1,13 @@
 import jwt
 from walletize.settings import SECRET_KEY
 
-def token_authentication(value):
+# Perform custom JWT authentication
+def token_authentication(received_token):
+    # Set default user_id = None in case of an error
     user_id = None
     try:
-        decoded_token = jwt.decode(value, SECRET_KEY, algorithms=['HS256'])
+        #Decode JWT using SECRET_KEY
+        decoded_token = jwt.decode(received_token, SECRET_KEY, algorithms=['HS256'])
         if decoded_token['token_type'] == "refresh":
             message = {"message": "You have provided Refresh Token"}
             status = 401
@@ -15,7 +18,8 @@ def token_authentication(value):
         status = 200
 
         return(user_id,message, status)
-         
+    
+    # Error Handlers
     except jwt.ExpiredSignatureError:
         message = {"message": "Expired Token"}
         status=401
