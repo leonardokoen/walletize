@@ -15,6 +15,7 @@ This API is organized around REST. It has predictable resource-oriented URLs, ac
 - PostgreSQL  
 - Redis
 - Celery
+- Docker
 
 ## Installation Guide
 
@@ -168,6 +169,8 @@ If the access JWT is valid and you provided 3 photos you will get this Response:
 
 **taskid**: Is the id of the background process trying to execute the verification code.
 
+Photos are stored temporary in src/media file. The background process deletes them at the end of its execution.
+
 ## Testing
 
 After building and running the containers you can execute the command in another terminal:
@@ -196,4 +199,14 @@ Use the command:
 
 ```bash
 python manage.py test api.tests.BackgroundProcessTestCase.test_succesful_token_verification_and_uploading_pictures
-``` 
+```
+
+## Errors
+
+Everything worked fine before dockerization, after dockerization when trying to send email celery-worker produces the following Error:
+
+```error
+ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1002)
+```
+
+That I could not find a way to resolve. It does not terminate the worker because I have used fail_silently = True. See src/activation/background_task.py
