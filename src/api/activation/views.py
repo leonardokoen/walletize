@@ -6,6 +6,7 @@ from api.models import User
 from rest_framework.parsers import MultiPartParser, FormParser
 from .background_task import photo_validation
 
+
 # Main Activation Procedure
 class UserActivationView(APIView):
     #Parsers for the incoming data(token , 3 photo files)
@@ -37,8 +38,9 @@ class UserActivationView(APIView):
                 return Response(message, status = 409)
             else:
                 file_path_id_front, file_path_id_back, file_path_selfie = serializer.save()
-                photo_validation.delay(file_path_id_front, file_path_id_back, file_path_selfie, user_id)
-                message = {"message": "You will receive an email about your account activation result"}
+                task = photo_validation.delay(file_path_id_front, file_path_id_back, file_path_selfie, user_id)
+                task_id = task.id
+                message = {"message": "You will receive an email about your account activation result", "taskid":task_id}
                 return Response(message, status = 200)
         return Response(serializer.errors, status=400)
     

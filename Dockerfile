@@ -19,4 +19,3 @@ RUN update-ca-certificates
 #let pip install required packages
 RUN pip install -r requirements.txt
 RUN apt-get update && apt-get install -y ca-certificates
-RUN python ./update_certificates.py

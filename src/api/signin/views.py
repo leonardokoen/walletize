@@ -20,9 +20,5 @@ class SignInView(APIView):
         refresh = RefreshToken.for_user(user)
         token_refresh = str(refresh)
         token_access = str(refresh.access_token)
-        return Response({'message': 'You Signed In Successfully','access_token (300s)': token_access, 'refresh_token (1 day)': token_refresh}, status=200)
+        return Response({'message': 'You Signed In Successfully','access': token_access, 'refresh': token_refresh}, status=200)
     
-    def handle_exception(self, exc):
-        if isinstance(exc, AuthenticationFailed):
-            return Response({'error': 'Invalid email or password.'}, status=401)
-        return super().handle_exception(exc) 

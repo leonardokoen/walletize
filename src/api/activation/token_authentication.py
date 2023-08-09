@@ -29,4 +29,12 @@ def token_authentication(received_token):
         message = {"message": "Invalid Token"}
         status=401
         return(user_id,message, status)
+
+
+# For test purposes
+def expired_token(token):
+    decoded_token = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    decoded_token['exp'] = decoded_token['exp'] - 3600
+    expired_token = jwt.encode(decoded_token, SECRET_KEY, algorithm='HS256')
+    return(expired_token)
     
