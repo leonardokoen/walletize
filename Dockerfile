@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.10.8
 
 #maintainer
 
@@ -14,6 +14,9 @@ WORKDIR /src
 
 #copy the app code to image working directory
 COPY ./src /src
-
+# COPY /etc/ssl/certs /usr/local/share/ca-certificates/
+RUN update-ca-certificates
 #let pip install required packages
 RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install -y ca-certificates
+RUN python ./update_certificates.py
